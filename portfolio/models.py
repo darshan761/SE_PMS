@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class User(models.Model):
-    id = models.IntegerField()
+    Id = models.IntegerField()
     name = models.CharField(max_length=120)
     portfolio_value = models.FloatField()
 
