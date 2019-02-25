@@ -14,5 +14,5 @@ urlpatterns = [
     path('graphics/',views.graphics,name='graphics'),
     path('about/',views.about,name='about'),
     path('profile/',views.profile,name='profile'),
-    path('transaction/',views.add,name='add')
+    path('transaction/<slug>',views.add,name='add')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

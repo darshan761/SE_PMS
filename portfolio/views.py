@@ -148,5 +148,9 @@ def postsignup(request):
         
     return HttpResponseRedirect("/")
 
-def add(request):
-    return render(request,'profile.html')
+def add(request,slug):
+    u = database.child('users').child(request.session['uid']).child('details').get()
+    e = u.val()
+    data = {'company':slug}
+    database.child('added').child(e["name"]).child().set(data)
+    return render(request,'transaction.html')
