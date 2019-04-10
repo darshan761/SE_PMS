@@ -20,9 +20,13 @@
         <p style="margin-left: 40px;font-size:24px" class="card-text"><strong>close:</strong> {{i.close}}</p>
     </div></br>
     <p style="margin-left: 53px;font-size:24px" class="card-text"><strong>Quantity:</strong>
-     <input type="number"  name="quantity" min="1" max="5"></p>
+      
+    <form method="POST" action="{% url 'add'  slug=i.company %}">{% csrf_token %}
+     <input type="number" name="quantity" min="1" max="5"></p>
+   
      <p style="margin-left: 53px;font-size:24px" class="card-text"><strong>Value:</strong> {{i.close}}</p>
-      <a href="{% url 'add'  slug=i.company %}" class="btn btn-primary" style="font-size:28px;position:relative;left:250px">Add</a></br></br>
+      <input type="submit" class="btn btn-primary" style="font-size:28px;position:relative;left:250px">Add</input></br></br>
+    </form>
     </div></br>
    
   </div>

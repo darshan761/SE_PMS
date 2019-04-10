@@ -1,2 +1,25 @@
 {% include "header.html" %}
-<h1>Welcome to your trnsction</h1>
+<h1>Welcome to your transaction</h1>
+
+<div class="container">
+	<div class="row text-center">
+		<div class="col-sm-3 ">Company</div>
+		<div class="col-sm-1 ">Open</div>
+		<div class="col-sm-1 ">Close</div>
+		<div class="col-sm-1 ">High</div>
+		<div class="col-sm-1 ">Low</div>
+		<div class="col-sm-2 ">Quantity</div>
+		<div class="col-sm-3 ">Buying Time</div>	
+	</div>
+	{% for x in data %}
+	<div class="row text-center">
+		<div class="col-sm-3">{{x.company}}</div>
+		<div class="col-sm-1">{{x.open}}</div>
+		<div class="col-sm-1">{{x.close}}</div>
+		<div class="col-sm-1">{{x.high}}</div>
+		<div class="col-sm-1">{{x.low}}</div>
+		<div class="col-sm-2">{{x.quantity}}</div>
+		<div class="col-sm-3">{{x.time}}</div>	
+	</div>
+	{% endfor %}	
+</div>
