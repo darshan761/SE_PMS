@@ -11,15 +11,17 @@
 		<div class="col-sm-2 ">Quantity</div>
 		<div class="col-sm-3 ">Buying Time</div>	
 	</div>
-	{% for x in data %}
+	{% for i,j  in data.items %}
+	
 	<div class="row text-center">
-		<div class="col-sm-3">{{x.company}}</div>
-		<div class="col-sm-1">{{x.open}}</div>
-		<div class="col-sm-1">{{x.close}}</div>
-		<div class="col-sm-1">{{x.high}}</div>
-		<div class="col-sm-1">{{x.low}}</div>
-		<div class="col-sm-2">{{x.quantity}}</div>
-		<div class="col-sm-3">{{x.time}}</div>	
+		<div class="col-sm-3">{{ j.company }}</div>
+		<div class="col-sm-1">{{j.open}}</div>
+		<div class="col-sm-1">{{j.close }}</div>
+		<div class="col-sm-1">{{ j.high}}</div>
+		<div class="col-sm-1">{{j.low }}</div>
+		<div class="col-sm-2">{{j.quantity }}</div>
+		<div class="col-sm-3">{{j.time }}</div>	
 	</div>
+ 
 	{% endfor %}	
 </div>

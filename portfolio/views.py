@@ -23,7 +23,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 database=firebase.database()
-tran=[]
+
 def login(request):
     message=""
     return render(request,'login.html',{"messg":message})
@@ -56,12 +56,16 @@ def home(request):
         response = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+i+'&apikey=62Q1OEQMZI876K16')
         stocks = response.json()
         my_dict={}
+        now = datetime.datetime.now() - datetime.timedelta(1)
+        dte = now.strftime("%Y-%m-%d")
+        print(dte)
+        
         #print(stocks.get('Time Series (Daily)').get('2019-02-20').get('1. open'))
         my_dict['company'] = list(symb.keys())[list(symb.values()).index(i)]
-        my_dict['low']=stocks.get('Time Series (Daily)').get('2019-02-20').get('3. low')
-        my_dict['open']=stocks.get('Time Series (Daily)').get('2019-02-20').get('1. open')
-        my_dict['close']=stocks.get('Time Series (Daily)').get('2019-02-20').get('4. close')
-        my_dict['high']=stocks.get('Time Series (Daily)').get('2019-02-20').get('2. high')
+        my_dict['low']=stocks.get('Time Series (Daily)').get(dte).get('3. low')
+        my_dict['open']=stocks.get('Time Series (Daily)').get(dte).get('1. open')
+        my_dict['close']=stocks.get('Time Series (Daily)').get(dte).get('4. close')
+        my_dict['high']=stocks.get('Time Series (Daily)').get(dte).get('2. high')
         #print("item:",item)
         ddd.append(my_dict)
     '''
@@ -156,10 +160,14 @@ def postsignup(request):
 def add(request,slug):
     u = database.child('users').child(request.session['uid']).child('details').get()
     e = u.val()
+    print(e)
+    port = e['portfolio_value']
+    stockno = e['stock_no']
     if request.method=="POST":
         quant = request.POST.get('quantity')
-    u = database.child('stocks').get()
-    for x in u.val():
+    
+    uu = database.child('stocks').get()
+    for x in uu.val():
         #print(x)
         if(x['company']==slug):
             stockdata = x
@@ -167,9 +175,13 @@ def add(request,slug):
     ts = time.time()        
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')        
     stockdata.update({'quantity':quant,'time':st})
-    #print(stockdata) 
-    tran.append(stockdata)          
-    database.child('added').child(request.session['uid']).set(tran)
-    u = database.child('added').child(request.session['uid']).get().val()
-    print(u)  
-    return render(request,'transaction.html',{"data":u})
+    add = float(quant) * float(stockdata['close'])
+    print(add , stockno+1)
+    print(e)
+    database.child('users').child(request.session['uid']).child('details').get().val().update({'portfolio_value':port+add,'stock_no':stockno+1}) 
+    print(e)          
+    database.child('added').child(e['name']).child(slug).set(stockdata)
+    
+    x = database.child('added').child(e['name']).child().get().val()
+    print(x)
+    return render(request,'transaction.html',{"data":x})

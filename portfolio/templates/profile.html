@@ -1,89 +1,63 @@
 {% include "header.html" %}
-<div class="container emp-profile">
-    <form method="post">
+
+<head>
+    <link rel="stylesheet" href='/static/design/design1.css'>
+</head>
+
+<div class="container portfolio">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="heading">				
+                <img src="https://image.ibb.co/cbCMvA/logo.png" />
+            </div>
+        </div>	
+    </div>
+    <div class="bio-info">
         <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="/static/bkg.jpg" style="height:200px;width:300px" alt=""/>
-                </br></br>
-                    <div class="file btn  btn-primary">
-                        Change Photo
-                        <input type="file" name="file"/>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bio-image">
+                            <img src="/static/img/user.png" style="width:300px" alt="image" />
+                        </div>			
                     </div>
-                </div>
+                </div>	
             </div>
             <div class="col-md-6">
-                <div class="profile-head">
-                            <h5>
-                                <b>{{user.name}}</b>
-                            </h5>
-                            <h6>
-                                <b>Software Engineer</b>
-                            </h6>
-                            <p class="proile-rating">PORTFOLIO VALUE : <span>{{user.portfolio_value}}</span></p>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">My profile</a>
-                        </li>
-                    </ul>
-                </div>
-            </br>
-                    <div class="row">
-    
-                        <div class="col-md-8">
-                            <div class="tab-content profile-tab" id="myTabContent">
-                                <div   role="tabpanel" >
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>User ID</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{user.id}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Name</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{user.name}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Email</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{user.email}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Phone</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{user.mobile_no}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Profession</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{user.profession}}</p>
-                                                </div>
-                                            </div>
-                                
-                               
-                            </div>
-                        </div>
-                    </div>
+                <div class="bio-content">
+                    <h1>MY PORTFOLIO</h1>
+                        <table class="table table-striped custab">
+                                        <tr>
+                                            <td><strong>ID</strong></td>
+                                            <td>{{user.id}}</td>
+                                           </tr>
+                                        <tr>
+                                            <td><strong>Name</strong></td>
+                                            <td>{{user.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Email</strong></td>
+                                            <td>{{user.email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Mobile</strong></td>
+                                             <td>{{user.mobile_no}}</td>
+                                        </tr>
+                                        <tr>
+                                                <td><strong>Profession</strong></td>
+                                                <td>{{user.profession}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Portfolio Value</strong></td>
+                                                <td>{{user.portfolio_value}}</td>
+                                            </tr>
+                                            <tr>
+                                                    <td><strong>No of Stocks</strong></td>
+                                                    <td>{{user.stock_no}}</td>
+                                                </tr>
+                                </table>
                 </div>
             </div>
-            <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-            </div>
-        </div>
-        
-    </form>           
+        </div>	
+    </div>
 </div>
