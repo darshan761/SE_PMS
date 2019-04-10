@@ -6,6 +6,8 @@ import pyrebase
 from django.shortcuts import render
 from django.contrib import auth
 import requests
+import datetime,time
+
 
 # Create your views here.
 
@@ -21,7 +23,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 database=firebase.database()
-
+tran=[]
 def login(request):
     message=""
     return render(request,'login.html',{"messg":message})
@@ -107,7 +109,10 @@ def profile(request):
 def transaction(request):
     u = database.child('users').child(request.session['uid']).child('details').get()
     e = u.val()
-    return render(request,'transaction.html',{"e":e["email"]})
+    u = database.child('added').child(request.session['uid']).get().val()
+    print(u)
+    print("UID:"+request.session['uid'])
+    return render(request,'transaction.html',{"e":e["email"],"data":u})
 
 def about(request):
     u = database.child('users').child(request.session['uid']).child('details').get()
@@ -151,6 +156,20 @@ def postsignup(request):
 def add(request,slug):
     u = database.child('users').child(request.session['uid']).child('details').get()
     e = u.val()
-    data = {'company':slug}
-    database.child('added').child(e["name"]).child().set(data)
-    return render(request,'transaction.html')
+    if request.method=="POST":
+        quant = request.POST.get('quantity')
+    u = database.child('stocks').get()
+    for x in u.val():
+        #print(x)
+        if(x['company']==slug):
+            stockdata = x
+            break
+    ts = time.time()        
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')        
+    stockdata.update({'quantity':quant,'time':st})
+    #print(stockdata) 
+    tran.append(stockdata)          
+    database.child('added').child(request.session['uid']).set(tran)
+    u = database.child('added').child(request.session['uid']).get().val()
+    print(u)  
+    return render(request,'transaction.html',{"data":u})
