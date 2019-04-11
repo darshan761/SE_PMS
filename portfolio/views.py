@@ -50,6 +50,7 @@ def home(request):
     u = database.child('users').child(request.session['uid']).child('details').get()
     e = u.val()
     ddd = []
+    ppp = []
     symb={'Microsoft':'MSFT','Google':'GOOG','Barclays':'BCS','JP Morgan Chase':'JPM','Bank of america':'bac'}
     for i in symb.values():
         print('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+i+'&apikey=62Q1OEQMZI876K16')
@@ -59,7 +60,18 @@ def home(request):
         now = datetime.datetime.now() - datetime.timedelta(1)
         dte = now.strftime("%Y-%m-%d")
         print(dte)
-        
+        now7 = datetime.datetime.now() - datetime.timedelta(7)
+        dte1 = now7.strftime("%Y-%m-%d")
+        now14 = datetime.datetime.now() - datetime.timedelta(14)
+        dte2 = now14.strftime("%Y-%m-%d")
+        now21 = datetime.datetime.now() - datetime.timedelta(21)
+        dte3 = now21.strftime("%Y-%m-%d")
+        trend = {}
+        trend['company'] = list(symb.keys())[list(symb.values()).index(i)]
+        trend[dte] =  stocks.get('Time Series (Daily)').get(dte).get('4. close')
+        trend[dte1] = stocks.get('Time Series (Daily)').get(dte1).get('4. close')
+        trend[dte2] = stocks.get('Time Series (Daily)').get(dte2).get('4. close')
+        trend[dte3] = stocks.get('Time Series (Daily)').get(dte3).get('4. close')
         #print(stocks.get('Time Series (Daily)').get('2019-02-20').get('1. open'))
         my_dict['company'] = list(symb.keys())[list(symb.values()).index(i)]
         my_dict['low']=stocks.get('Time Series (Daily)').get(dte).get('3. low')
@@ -68,6 +80,7 @@ def home(request):
         my_dict['high']=stocks.get('Time Series (Daily)').get(dte).get('2. high')
         #print("item:",item)
         ddd.append(my_dict)
+        ppp.append(trend)
     '''
     symb1={'Infosys':'infy','Tata Motors':'ttm','Berkshire':'berk','toyota':'tm','apple':'aapl'}
     for i in symb1.values():
@@ -100,8 +113,9 @@ def home(request):
         ddd.append(my_dict)
     #data = { 'low':stocks['low'],'open':stocks['open'],'close':stocks['close'],'high':stocks['high']} 
     '''
+    database.child('trend').set(ppp)
     database.child('stocks').set(ddd)
-    print(ddd)
+    print(ppp)
     return render(request,'home.html',{"e":e["email"],'data':ddd})
 
 def profile(request):
@@ -113,10 +127,11 @@ def profile(request):
 def transaction(request):
     u = database.child('users').child(request.session['uid']).child('details').get()
     e = u.val()
-    u = database.child('added').child(request.session['uid']).get().val()
-    print(u)
+    x = database.child('added').child(e['name']).child().get().val()
+    print(x)
+    #print(u)
     print("UID:"+request.session['uid'])
-    return render(request,'transaction.html',{"e":e["email"],"data":u})
+    return render(request,'transaction.html',{"e":e["email"],"data":x})
 
 def about(request):
     u = database.child('users').child(request.session['uid']).child('details').get()
@@ -126,7 +141,26 @@ def about(request):
 def graphics(request):
     u = database.child('users').child(request.session['uid']).child('details').get()
     e = u.val()
-    return render(request,'graphics.html',{"e":e["email"]})
+    x = database.child('added').child(e['name']).child().get().val()
+    y =database.child('trend').get().val()
+    print(y)
+    dat = []
+    price = []
+    for j in y:
+        dat = list(j.keys())
+        price.append(list(j.values()))
+    #dat.remove('company')
+    print(dat)
+    print(price)
+    stocks = {}
+    for i,j in x.items():
+        stocks[i] = j['close']   
+    print(stocks) 
+    labels = list(stocks.keys())
+    val = list(stocks.values())
+    print(labels)
+    print(val)
+    return render(request,'graphics.html',{"e":e["email"],"label":labels,"val":val,'dat':dat,'price':price})
 
 def logout(request):
     #auth.logout(request)
@@ -178,7 +212,7 @@ def add(request,slug):
     add = float(quant) * float(stockdata['close'])
     print(add , stockno+1)
     print(e)
-    database.child('users').child(request.session['uid']).child('details').get().val().update({'portfolio_value':port+add,'stock_no':stockno+1}) 
+    database.child('users').child(request.session['uid']).child('details').update({'portfolio_value':port+add,'stock_no':stockno+1}) 
     print(e)          
     database.child('added').child(e['name']).child(slug).set(stockdata)
     

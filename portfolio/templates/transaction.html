@@ -1,27 +1,29 @@
 {% include "header.html" %}
-<h1>Welcome to your transaction</h1>
-
 <div class="container">
-	<div class="row text-center">
-		<div class="col-sm-3 ">Company</div>
-		<div class="col-sm-1 ">Open</div>
-		<div class="col-sm-1 ">Close</div>
-		<div class="col-sm-1 ">High</div>
-		<div class="col-sm-1 ">Low</div>
-		<div class="col-sm-2 ">Quantity</div>
-		<div class="col-sm-3 ">Buying Time</div>	
-	</div>
-	{% for i,j  in data.items %}
-	
-	<div class="row text-center">
-		<div class="col-sm-3">{{ j.company }}</div>
-		<div class="col-sm-1">{{j.open}}</div>
-		<div class="col-sm-1">{{j.close }}</div>
-		<div class="col-sm-1">{{ j.high}}</div>
-		<div class="col-sm-1">{{j.low }}</div>
-		<div class="col-sm-2">{{j.quantity }}</div>
-		<div class="col-sm-3">{{j.time }}</div>	
-	</div>
- 
-	{% endfor %}	
+<table class="table table-hover">
+		<thead>
+				<tr>
+				  <th scope="col">Company</th>
+				  <th scope="col">Open</th>
+				  <th scope="col">Close</th>
+				  <th scope="col">High</th>
+				  <th scope="col">Low</th>
+				  <th scope="col">Quantity</th>
+				  <th scope="col">Buying Time</th>
+				</tr>
+			  </thead>
+			  <tbody>
+					{% for i,j  in data.items %}
+					<tr>
+					  <td>{{ j.company }}</td>
+					  <td>{{ j.open }}</td>
+					  <td>{{ j.close }}</td>
+					  <td>{{ j.high }}</td>
+					  <td>{{ j.low }}</td>
+					  <td>{{ j.quantity }}</td>
+					  <td>{{ j.time }}</td>
+					</tr>
+					{% endfor %}
+			 </tbody>
+</table>
 </div>
