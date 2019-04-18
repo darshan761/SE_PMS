@@ -1,13 +1,16 @@
 {% include "header.html" %}
-<div class="search-container" style="position:relative;left: 10%;">
+<!--<div class="search-container" style="position:relative;left: 10%;">
     <form action="">
       <input type="text" placeholder="Search Stocks" name="search">
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
-</div>
-</br>
+</div>-->
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static "design1.css" %}">
+<div style="background-image: url('/static/wll.jpg'); height:100%;width:100%;background-size: cover; background-repeat: no-repeat;" >
 {% for i in data %}
-<div class="card w-75"  >
+<div class="card w-75">
     
     <div class="card-body" style="position:relative;padding: 2px;border:black 1px solid;width:600px;top: 50%;left: 10%;">
         <form method="POST" action="{% url 'add'  slug=i.company %}">{% csrf_token %}
@@ -33,4 +36,5 @@
    
   </div>
   {% endfor %}
- 
+</div>
+   

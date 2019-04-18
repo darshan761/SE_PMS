@@ -51,7 +51,7 @@ def home(request):
     e = u.val()
     ddd = []
     ppp = []
-    symb={'Microsoft':'MSFT','Google':'GOOG','Barclays':'BCS','JP Morgan Chase':'JPM','Bank of america':'bac'}
+    symb={'Microsoft':'MSFT','Google':'GOOG','Apple':'aapl','JP Morgan Chase':'JPM','Bank of america':'bac'}
     for i in symb.values():
         print('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+i+'&apikey=62Q1OEQMZI876K16')
         response = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+i+'&apikey=62Q1OEQMZI876K16')
@@ -149,7 +149,7 @@ def graphics(request):
     for j in y:
         dat = list(j.keys())
         price.append(list(j.values()))
-    #dat.remove('company')
+    dat.remove('company')
     print(dat)
     print(price)
     stocks = {}

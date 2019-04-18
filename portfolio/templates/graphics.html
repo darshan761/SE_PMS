@@ -25,17 +25,37 @@ new Chart(document.getElementById("pie-chart"), {
 });
 </script>
 
-{% for j in price %}
-<canvas id="line-chart" width="900" height="300"></canvas>
-<script>
-    new Chart(document.getElementById("line-chart"), {
+<div class="center">
+       
+<canvas id="line-chart" width="1500" height="300"></canvas>
+<script> 
+
+ new Chart(document.getElementById("line-chart"), {
   type: 'line',
   data: {
-    labels:  {{dat|safe}} //[1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+    labels: {{dat | safe }}, // [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
     datasets: [{ 
-        data: {{ j|safe }} //[86,114,106,106,107,111,133,221,783,2478],
-        label: "Africa",
+        data:  [120.2200,116.9300,119.3600,120.1900],
+        label: "Microsoft",//{{ j.4 |safe}},
         borderColor: "#3e95cd",
+        fill: false
+      } ,
+      { 
+        data:  [1231.5400,1168.4900,1215.0000,1202.1600],
+        label: "Google",//{{ j.4 |safe}},
+        borderColor: "#b22222",
+        fill: false
+      } ,
+      { 
+        data:  [195.0900,188.7200,195.6900,200.6200],
+        label: "Apple",//{{ j.4 |safe}},
+        borderColor: "#ffff00",
+        fill: false
+      } ,
+      { 
+        data:  [102.8700,100.7100,105.5600,105.3400],
+        label: "JP Morgan Chase",//{{ j.4 |safe}},
+        borderColor: "#008000",
         fill: false
       } 
     ]
@@ -48,5 +68,5 @@ new Chart(document.getElementById("pie-chart"), {
   }
 });
 </script>
+</div>
 
-{% endfor %}
